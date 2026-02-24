@@ -23,7 +23,7 @@ jobs:
         with:
           java-version: '21'
           distribution: 'temurin'
-          cache: maven# Optimise le temps de build en gardant les dépendances en cache
+          cache: maven # Optimise le temps de build en gardant les dépendances en cache
 
       # Étape 3 : Compiler et lancer les tests avec Maven
       - name: Build and Test with Maven
