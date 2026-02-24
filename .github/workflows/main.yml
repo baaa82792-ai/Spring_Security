@@ -1,19 +1,37 @@
-# 1. Le nom de votre automatisation
-name: Verification de mon code
+name: Java CI with Maven
 
-# 2. L'ÉVÉNEMENT : Quand est-ce qu'on lance la machine ?
+# Déclencheur : On lance le pipeline à chaque push ou pull request sur 'main'
 on:
   push:
-    branches: [ main ]  # Se lance quand on envoie du code sur la branche principale
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
 
-# 3. LES JOBS : Ce que le serveur doit faire
 jobs:
-  ma-verification:
-    runs-on: ubuntu-latest  # GitHub nous prête un ordinateur sous Linux
+  build:
+    # On demande à GitHub un serveur Ubuntu tout neuf
+    runs-on: ubuntu-latest
 
-    steps: # La liste des étapes à suivre
-      - name: Recupérer mon code
-        uses: actions/checkout@v4 # Action standard pour copier votre code sur le serveur
+    steps:
+      # Étape 1 : Récupérer le code source du projet
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-      - name: Dire bonjour
-        run: echo "Le pipeline fonctionne !"it
+      # Étape 2 : Installer Java (JDK 17 par exemple)
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: maven # Optimise le temps de build en gardant les dépendances en cache
+
+      # Étape 3 : Compiler et lancer les tests avec Maven
+      - name: Build and Test with Maven
+        run: mvn -B clean verify
+
+      # Étape 4 : (Optionnel) Sauvegarder l'archive JAR générée
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: application-jar
+          path: target/*.jar
