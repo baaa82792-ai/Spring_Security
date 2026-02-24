@@ -1,0 +1,19 @@
+# 1. Le nom de votre automatisation
+name: Verification de mon code
+
+# 2. L'ÉVÉNEMENT : Quand est-ce qu'on lance la machine ?
+on:
+  push:
+    branches: [ main ]  # Se lance quand on envoie du code sur la branche principale
+
+# 3. LES JOBS : Ce que le serveur doit faire
+jobs:
+  ma-verification:
+    runs-on: ubuntu-latest  # GitHub nous prête un ordinateur sous Linux
+
+    steps: # La liste des étapes à suivre
+      - name: Recupérer mon code
+        uses: actions/checkout@v4 # Action standard pour copier votre code sur le serveur
+
+      - name: Dire bonjour
+        run: echo "Le pipeline fonctionne !"it
