@@ -17,13 +17,13 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # Étape 2 : Installer Java (JDK 17 par exemple)
-      - name: Set up JDK 17
-        uses: actions/setup-java@v3
+      # Étape 2 : Installer Java (On passe de 17 à 21)
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4 # Passage à la v4 (plus récente)
         with:
-          java-version: '17'
+          java-version: '21'
           distribution: 'temurin'
-          cache: maven # Optimise le temps de build en gardant les dépendances en cache
+          cache: maven# Optimise le temps de build en gardant les dépendances en cache
 
       # Étape 3 : Compiler et lancer les tests avec Maven
       - name: Build and Test with Maven
